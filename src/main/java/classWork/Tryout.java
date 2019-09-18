@@ -1,9 +1,5 @@
 package classWork;
 
-import ua.epam.task1.Factorial.Factorial;
-
-import java.math.BigInteger;
-
 public class Tryout {
     static {
         Byte[][] Byte = {{0}};
