@@ -1,7 +1,7 @@
 package classWork;
 
 public class B extends A {
-    B() {
+    private B() {
         super(0);
         System.out.println("Constructor class B");
     }

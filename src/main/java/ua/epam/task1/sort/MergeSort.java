@@ -1,6 +1,6 @@
 package ua.epam.task1.sort;
 
-import org.jetbrains.annotations.NotNull;
+
 
 public class MergeSort implements Sort {
     private void merge(int start, int mid, int end, int[] arr) {
@@ -31,7 +31,7 @@ public class MergeSort implements Sort {
         }
     }
 
-    private void mergeSort(int start, int end, @NotNull int[] arr ) {
+    private void mergeSort(int start, int end, int[] arr ) {
         int mid = (start + end) / 2;
 
         if ( mid == start ) {
@@ -44,7 +44,7 @@ public class MergeSort implements Sort {
     }
 
     @Override
-    public void sort( @NotNull int[] arr) {
+    public void sort( int[] arr) {
         int start = 0;
         int end = arr.length;
 

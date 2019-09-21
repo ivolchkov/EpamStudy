@@ -1,10 +1,9 @@
 package ua.epam.task1.sort;
 
-import org.jetbrains.annotations.NotNull;
 
 public class InsertionSort implements Sort {
     @Override
-    public void sort(@NotNull int[] arr) {
+    public void sort(int[] arr) {
         int size = arr.length;
 
         for ( int i = 1; i < size; i++ ) {

@@ -1,6 +1,5 @@
 package ua.epam.task1.sort;
 
-import org.jetbrains.annotations.NotNull;
 
 public class QuickSort implements Sort {
     private int partition(int start, int end, int[] arr) {
@@ -30,7 +29,7 @@ public class QuickSort implements Sort {
         return tail;
     }
 
-    private void quickSort(int start, int end, @NotNull int[] arr) {
+    private void quickSort(int start, int end, int[] arr) {
         if ( end > start ) {
             int pivot = partition(start, end, arr);
 
@@ -40,7 +39,7 @@ public class QuickSort implements Sort {
     }
 
     @Override
-    public void sort( @NotNull int[] arr) {
+    public void sort( int[] arr) {
         int start = 0;
         int end = arr.length - 1;
 

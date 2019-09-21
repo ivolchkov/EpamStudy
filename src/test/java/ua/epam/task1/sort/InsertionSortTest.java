@@ -1,6 +1,7 @@
 package ua.epam.task1.sort;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -49,8 +50,8 @@ public class InsertionSortTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentException() {
-        exception.expect(IllegalArgumentException.class);
+    public void shouldThrowNullPointerException() {
+        exception.expect(NullPointerException.class);
 
         insertionSort.sort(null);
     }
