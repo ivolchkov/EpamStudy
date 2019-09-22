@@ -2,7 +2,7 @@ package ua.epam.task4.student;
 
 import java.time.LocalDate;
 
-public class Student {
+public class Student implements Comparable {
     private int id;
     private String surname;
     private String name;
@@ -118,23 +118,35 @@ public class Student {
     public String toString() {
         StringBuilder student = new StringBuilder();
 
-        student.append("Student №").append(id).append("/n");
-        student.append("Name: ").append(name).append("/n");
-        student.append("Surname: ").append(surname).append("/n");
-        student.append("Second name: ").append(secondName).append("/n");
-        student.append("Date of birth: ").append(dateOfBirth).append("/n");
-        student.append("Address: ").append(address).append("/n");
-        student.append("Phone number: ").append(phoneNumber).append("/n");
-        student.append("Faculty: ").append(faculty).append("/n");
-        student.append("Course: ").append(course).append("/n");
+        student.append("Student №").append(id).append("\n");
+        student.append("Name: ").append(name).append("\n");
+        student.append("Surname: ").append(surname).append("\n");
+        student.append("Second name: ").append(secondName).append("\n");
+        student.append("Date of birth: ").append(dateOfBirth).append("\n");
+        student.append("Address: ").append("\n").append(address).append("\n");
+        student.append("Phone number: ").append(phoneNumber).append("\n");
+        student.append("Faculty: ").append(faculty).append("\n");
+        student.append("Course: ").append(course).append("\n");
         student.append("Group: ").append(group);
 
         return student.toString();
     }
 
+    @Override
+    public int compareTo(Object obj) {
+        if ( obj.getClass() == this.getClass() ) {
+            Student other = (Student) obj;
+
+            return this.id - other.id;
+        }
+
+        throw new IllegalArgumentException();
+    }
+
     public static StudentBuilder build() {
         return new StudentBuilder();
     }
+
 
     public static class StudentBuilder {
         private int id;

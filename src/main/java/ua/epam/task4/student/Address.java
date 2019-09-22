@@ -51,9 +51,9 @@ public class Address {
     public String toString() {
         StringBuilder address = new StringBuilder();
 
-        address.append("City: ").append(city).append("/n");
+        address.append("City: ").append(city).append("\n");
         address.append("Street: ").append(street);
-        address.append(" №: ").append(streetNumber).append("/n");
+        address.append(" №: ").append(streetNumber).append("\n");
         address.append("Flat №: ").append(flatNumber);
 
         return address.toString();
