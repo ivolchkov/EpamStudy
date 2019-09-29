@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Student implements Comparable {
+public class Student implements Comparable<Student> {
     private Long id;
     private String surname;
     private String name;
@@ -147,14 +147,8 @@ public class Student implements Comparable {
     }
 
     @Override
-    public int compareTo(Object obj) {
-        if ( obj.getClass() == this.getClass() ) {
-            Student other = (Student) obj;
-
-            return (int) (this.id - other.id);
-        }
-
-        throw new IllegalArgumentException();
+    public int compareTo(Student other) {
+        return (int) (this.id - other.id);
     }
 
 
@@ -193,21 +187,11 @@ public class Student implements Comparable {
         }
 
         public StudentBuilder withEmail(String email) {
-            validate(email);
             this.email = email;
 
             return this;
         }
 
-        private void validate(String email) {
-            String regex = "(\\w{2,})@(\\w+\\p{Punct})([a-z]{2,5})";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(email);
-
-            if (!matcher.find()) {
-                throw new IllegalArgumentException();
-            }
-        }
 
         public StudentBuilder withDateOfBirth(LocalDate dateOfBirth) {
             this.dateOfBirth = dateOfBirth;

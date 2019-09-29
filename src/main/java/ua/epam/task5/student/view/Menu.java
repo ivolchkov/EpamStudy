@@ -8,9 +8,6 @@ import ua.epam.task5.student.repository.StudentRepositoryImpl;
 import ua.epam.task5.student.service.DepartmentServiceImpl;
 import ua.epam.task5.student.service.StudentServiceImpl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;
@@ -18,44 +15,54 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class Menu {
-    private static final ResourceManager manager = ResourceManager.INSTANCE;
-    private static final StudentRepositoryImpl repository = new StudentRepositoryImpl();
-    private static final StudentServiceImpl studentService = new StudentServiceImpl(repository);
-    private static final DepartmentServiceImpl departmentService = new DepartmentServiceImpl(repository);
-    private static final Scanner in = new Scanner(System.in);
+    private static final ResourceManager MANAGER = ResourceManager.INSTANCE;
+    private static final StudentRepositoryImpl REPOSITORY = new StudentRepositoryImpl();
+    private static final StudentServiceImpl STUDENT_SERVICE = new StudentServiceImpl(REPOSITORY);
+    private static final DepartmentServiceImpl DEPARTMENT_SERVICE = new DepartmentServiceImpl(REPOSITORY);
+    private static final Scanner IN = new Scanner(System.in);
+    public static final String LANGUAGE = "Select an appropriate language:\n" + "1)Russian\n" + "2)German\n" + "3)Default(English)";
 
     public void run(){
         autoRegistration();
+        int language = 0;
+        int choice = 0;
 
-        System.out.println("Select an appropriate language:\n" +
-                "1)Russian\n" +
-                "2)German\n" +
-                "3)Default(English)");
+        System.out.println(LANGUAGE);
 
-        int language = in.nextInt();
+        language = IN.nextInt();
+        selectLanguage(language);
 
-        switch (language) {
-            case 1: {
-                manager.changeResourse(new Locale("ru", "RU"));
-                break;
-            }
-            case 2: {
-                manager.changeResourse(new Locale("de", "DEU"));
-                break;
-            }
-            default: {
-            }
-        }
-
-        System.out.println(manager.getString("introduction"));
-        int choice = in.nextInt();
+        System.out.println(MANAGER.getString("introduction"));
+        choice = IN.nextInt();
 
         switch (choice) {
             case 1: signUp(); break;
             case 2: signIn(); break;
             default:
-                System.out.println(manager.getString("invalidChoice"));
+                System.out.println(MANAGER.getString("invalidChoice"));
         }
+    }
+
+    private void selectLanguage(int language) {
+        String country, languageLocale;
+        switch (language) {
+            case 1: {
+                country = "ru";
+                languageLocale = "RU";
+                break;
+            }
+            case 2: {
+                country = "de";
+                languageLocale = "DEU";
+                break;
+            }
+            default: {
+                country = "en";
+                languageLocale = "US";
+            }
+        }
+        Locale locale = new Locale(country, languageLocale);
+        MANAGER.changeResourse(locale);
     }
 
     private void signUp() {
@@ -77,39 +84,39 @@ public class Menu {
         int course;
         String group;
 
-        System.out.println(manager.getString("registration.start"));
-        name = in.next();
-        System.out.println(manager.getString("registration.surname"));
-        surname = in.next();
-        System.out.println(manager.getString("registration.secondName"));
-        secondName = in.next();
-        System.out.println(manager.getString("registration.email"));
-        email = in.next();
-        System.out.println(manager.getString("registration.birth"));
-        yearOfBirth = in.nextInt();
-        monthOfBirth = in.nextInt();
-        dayOfBirth = in.nextInt();
-        System.out.println(manager.getString("registration.city"));
-        city = in.next();
-        System.out.println(manager.getString("registration.street"));
-        street = in.next();
-        System.out.println(manager.getString("registration.streetNumber"));
-        streetNumber = in.nextInt();
-        System.out.println(manager.getString("registration.flatNumber"));
-        flatNumber = in.nextInt();
-        System.out.println(manager.getString("registration.code"));
-        code = in.next();
-        System.out.println(manager.getString("registration.number"));
-        number = in.next();
-        System.out.println(manager.getString("registration.course"));
-        course = in.nextInt();
-        System.out.println(manager.getString("registration.depName"));
-        departmentName = in.next();
+        System.out.println(MANAGER.getString("registration.start"));
+        name = IN.next();
+        System.out.println(MANAGER.getString("registration.surname"));
+        surname = IN.next();
+        System.out.println(MANAGER.getString("registration.secondName"));
+        secondName = IN.next();
+        System.out.println(MANAGER.getString("registration.email"));
+        email = IN.next();
+        System.out.println(MANAGER.getString("registration.birth"));
+        yearOfBirth = IN.nextInt();
+        monthOfBirth = IN.nextInt();
+        dayOfBirth = IN.nextInt();
+        System.out.println(MANAGER.getString("registration.city"));
+        city = IN.next();
+        System.out.println(MANAGER.getString("registration.street"));
+        street = IN.next();
+        System.out.println(MANAGER.getString("registration.streetNumber"));
+        streetNumber = IN.nextInt();
+        System.out.println(MANAGER.getString("registration.flatNumber"));
+        flatNumber = IN.nextInt();
+        System.out.println(MANAGER.getString("registration.code"));
+        code = IN.next();
+        System.out.println(MANAGER.getString("registration.number"));
+        number = IN.next();
+        System.out.println(MANAGER.getString("registration.course"));
+        course = IN.nextInt();
+        System.out.println(MANAGER.getString("registration.depName"));
+        departmentName = IN.next();
 
-        System.out.println(manager.getString("registration.depId"));
-        id = in.nextLong();
-        System.out.println(manager.getString("registration.group"));
-        group = in.next();
+        System.out.println(MANAGER.getString("registration.depId"));
+        id = IN.nextLong();
+        System.out.println(MANAGER.getString("registration.group"));
+        group = IN.next();
 
         LocalDate date = LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
         Address address = Address.build().
@@ -135,18 +142,18 @@ public class Menu {
                 withGroup(group).
                 build();
 
-        studentService.register(student);
+        STUDENT_SERVICE.register(student);
 
-        System.out.println(manager.getString("registration.success"));
-        System.out.println(manager.getString("registration.yourId") + student.getId());
-        System.out.println(manager.getString("registration.nextStep"));
+        System.out.println(MANAGER.getString("registration.success"));
+        System.out.println(MANAGER.getString("registration.yourId") + student.getId());
+        System.out.println(MANAGER.getString("registration.nextStep"));
 
-        int signIn = in.nextInt();
+        int signIn = IN.nextInt();
 
         if ( signIn == 1 ) {
             signIn();
         } else {
-            System.out.println(manager.getString("registration.goodBye"));
+            System.out.println(MANAGER.getString("registration.goodBye"));
             System.exit(0);
         }
     }
@@ -155,30 +162,29 @@ public class Menu {
         Long id;
         String name;
 
-        System.out.println(manager.getString("login.id"));
-        id = in.nextLong();
-        in.nextLine();
-        System.out.println(manager.getString("login.name"));
-        name = in.nextLine();
+        System.out.println(MANAGER.getString("login.id"));
+        id = IN.nextLong();
+        IN.nextLine();
+        System.out.println(MANAGER.getString("login.name"));
+        name = IN.nextLine();
 
-        Student student = departmentService.showStudent(id);
+        Student student = DEPARTMENT_SERVICE.showStudent(id);
         Objects.requireNonNull(student, "Student has not been found");
 
         if ( student.getName().equals(name) ) {
             operationService(student);
         } else {
-            System.out.println(manager.getString("login.invalidOperation"));
+            System.out.println(MANAGER.getString("login.invalidOperation"));
         }
 
     }
 
     private void operationService(Student student) {
-
         boolean isFinish = false;
 
         while (!isFinish) {
-            System.out.println(manager.getString("operation.selection"));
-            int choice = in.nextInt();
+            System.out.println(MANAGER.getString("operation.selection"));
+            int choice = IN.nextInt();
 
             switch (choice) {
                 case 1 : {
@@ -194,7 +200,7 @@ public class Menu {
                     break;
                 }
                 case 4 : {
-                    TreeSet<Student> students = departmentService.showGroup(student.getGroup());
+                    TreeSet<Student> students = DEPARTMENT_SERVICE.showGroup(student.getGroup());
 
                     for (Student s: students) {
                         System.out.println(s);
@@ -215,13 +221,13 @@ public class Menu {
         String departmentName;
         Department department;
 
-        System.out.println(manager.getString("operation.depName"));
-        departmentName = in.next();
-        System.out.println(manager.getString("operation.depId"));
-        id = in.nextLong();
+        System.out.println(MANAGER.getString("operation.depName"));
+        departmentName = IN.next();
+        System.out.println(MANAGER.getString("operation.depId"));
+        id = IN.nextLong();
 
         department = new Department(id, departmentName);
-        students = departmentService.showDepartmentStudents(department);
+        students = DEPARTMENT_SERVICE.showDepartmentStudents(department);
 
         Objects.requireNonNull(students, "There are no students in this department");
 
@@ -237,15 +243,15 @@ public class Menu {
         int course;
         Department department;
 
-        System.out.println(manager.getString("operation.depName"));
-        departmentName = in.next();
-        System.out.println(manager.getString("operation.depId"));
-        id = in.nextLong();
-        System.out.println(manager.getString("operation.course"));
-        course = in.nextInt();
+        System.out.println(MANAGER.getString("operation.depName"));
+        departmentName = IN.next();
+        System.out.println(MANAGER.getString("operation.depId"));
+        id = IN.nextLong();
+        System.out.println(MANAGER.getString("operation.course"));
+        course = IN.nextInt();
 
         department = new Department(id, departmentName);
-        students = departmentService.showDepartmentAndCourseStudents(department, course);
+        students = DEPARTMENT_SERVICE.showDepartmentAndCourseStudents(department, course);
 
         Objects.requireNonNull(students, "There are no students in this department and on this year of study");
 
@@ -261,13 +267,13 @@ public class Menu {
         int dayOfBirth;
         LocalDate date;
 
-        System.out.println(manager.getString("operation.date"));
-        yearOfBirth = in.nextInt();
-        monthOfBirth = in.nextInt();
-        dayOfBirth = in.nextInt();
+        System.out.println(MANAGER.getString("operation.date"));
+        yearOfBirth = IN.nextInt();
+        monthOfBirth = IN.nextInt();
+        dayOfBirth = IN.nextInt();
 
         date = LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
-        students = departmentService.showStudentsOlderThan(date);
+        students = DEPARTMENT_SERVICE.showStudentsOlderThan(date);
 
         Objects.requireNonNull(students, "There are no students older than you chose");
 
@@ -395,12 +401,12 @@ public class Menu {
 
 
 
-        studentService.register(volchkov);
-        studentService.register(ilchenko);
-        studentService.register(lopuha);
-        studentService.register(samsonov);
-        studentService.register(piznak);
-        studentService.register(kovtanyuk);
+        STUDENT_SERVICE.register(volchkov);
+        STUDENT_SERVICE.register(ilchenko);
+        STUDENT_SERVICE.register(lopuha);
+        STUDENT_SERVICE.register(samsonov);
+        STUDENT_SERVICE.register(piznak);
+        STUDENT_SERVICE.register(kovtanyuk);
 
     }
 }

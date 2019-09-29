@@ -88,29 +88,36 @@ public class DepartmentServiceImplTest {
     @Test
     public void shouldThrowNullPointerExceptionWhenSearchingByDep() {
         exception.expect(NullPointerException.class);
-
+        exception.expectMessage("Invalid department");
         implementation.showDepartmentStudents(null);
     }
 
     @Test
     public void shouldThrowNullPointerExceptionWhenSearchingByDepAndCourse() {
         exception.expect(NullPointerException.class);
-
+        exception.expectMessage("Invalid department");
         implementation.showDepartmentAndCourseStudents(null, 1);
     }
 
     @Test
     public void shouldThrowNullPointerExceptionWhenSearchingByAge() {
         exception.expect(NullPointerException.class);
-
+        exception.expectMessage("Invalid date");
         implementation.showStudentsOlderThan(null);
     }
 
     @Test
     public void shouldThrowNullPointerExceptionWhenSearchingByGroup() {
         exception.expect(NullPointerException.class);
-
+        exception.expectMessage("Invalid group");
         implementation.showGroup(null);
+    }
+
+    @Test
+    public void shouldThrowNullPointerExceptionWhenSearchingById() {
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("Invalid identification");
+        implementation.showStudent(null);
     }
 
 }

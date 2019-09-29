@@ -6,18 +6,22 @@ import java.util.regex.Pattern;
 public class Tryout {
 
     public static void main(String[] args) {
-        String email = "aaay@gmail.com grayka@gmail.com";
-        String regex = "(\\w{2,})@(\\w+\\p{Punct})([a-z]{2,5})";
+        String secondName = "165-65-49 sdf 125-35-79 12-58-65";
+//        String regex = "(\\w{2,})@(\\w+\\p{Punct})([a-z]{2,5})";
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher matcher = pattern.matcher(email);
+//
+//
+//        while(matcher.find()) {
+//            System.out.println("e-mail:" + matcher.group());
+//        }
+        String regex = "\\d{3}-\\d{2}-\\d{2}";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-
+        Matcher matcher = pattern.matcher(secondName);
 
         while(matcher.find()) {
-            System.out.println("e-mail:" + matcher.group());
+            System.out.println("second name " + matcher.group());
         }
-
-
-
     }
 }
 
