@@ -1,5 +1,8 @@
 package ua.epam.task5.student.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.repository.StudentRepository;
@@ -8,9 +11,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.TreeSet;
 
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
     private final StudentRepository studentRepository;
 
+    @Autowired
     public DepartmentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }

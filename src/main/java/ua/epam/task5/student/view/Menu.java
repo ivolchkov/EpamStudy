@@ -1,5 +1,7 @@
 package ua.epam.task5.student.view;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ua.epam.task5.student.configuration.DIConfiguration;
 import ua.epam.task5.student.domain.Address;
 import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.domain.PhoneNumber;
@@ -15,10 +17,11 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class Menu {
+    public static final AnnotationConfigApplicationContext CONTEXT = new AnnotationConfigApplicationContext(DIConfiguration.class);
     private static final ResourceManager MANAGER = ResourceManager.INSTANCE;
-    private static final StudentRepositoryImpl REPOSITORY = new StudentRepositoryImpl();
-    private static final StudentServiceImpl STUDENT_SERVICE = new StudentServiceImpl(REPOSITORY);
-    private static final DepartmentServiceImpl DEPARTMENT_SERVICE = new DepartmentServiceImpl(REPOSITORY);
+    private static final StudentRepositoryImpl REPOSITORY = CONTEXT.getBean(StudentRepositoryImpl.class);
+    private static final StudentServiceImpl STUDENT_SERVICE = CONTEXT.getBean(StudentServiceImpl.class);
+    private static final DepartmentServiceImpl DEPARTMENT_SERVICE = CONTEXT.getBean(DepartmentServiceImpl.class);
     private static final Scanner IN = new Scanner(System.in);
     public static final String LANGUAGE = "Select an appropriate language:\n" + "1)Russian\n" + "2)German\n" + "3)Default(English)";
 

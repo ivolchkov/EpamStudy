@@ -2,6 +2,7 @@ package ua.epam.task5.student.service;
 
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+import ua.epam.task5.student.domain.PhoneNumber;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.repository.StudentRepository;
 import org.junit.After;
@@ -43,7 +44,7 @@ public class StudentServiceImplTest {
 //    };
 //    private StudentServiceImpl studentService = new StudentServiceImpl();
 
-//    private StudentRepository studentRepository = Mockito.mock(StudentRepository.class);
+    //    private StudentRepository studentRepository = Mockito.mock(StudentRepository.class);
 //    private StudentServiceImpl studentService = new StudentServiceImpl(studentRepository);
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -61,7 +62,12 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldRegisterStudent() {
-        Student expected = Student.build().withName("Igor").build();
+        Student expected = Student.build().withName("Igor").
+                withSurname("Volchkov").
+                withSecondName("Vasilyevich").
+                withEmail("igorik@gmail.com").
+                withPhoneNumber(new PhoneNumber("+(380)", "165-35-85")).
+                build();
         when(studentRepository.save(any(Student.class))).thenReturn(expected);
         Student actual = studentService.register(expected);
 
@@ -69,11 +75,10 @@ public class StudentServiceImplTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentException() {
-        Student expected = null;
-        exception.expect(IllegalArgumentException.class);
-
-        Student actual = studentService.register(expected);
+    public void shouldThrowNullPointerException() {
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("Invalid registration!");
+        Student actual = studentService.register(null);
     }
 
 }

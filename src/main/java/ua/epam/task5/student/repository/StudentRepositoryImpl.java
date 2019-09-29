@@ -1,5 +1,6 @@
 package ua.epam.task5.student.repository;
 
+import org.springframework.stereotype.Repository;
 import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.domain.Student;
 
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeSet;
 
+@Repository
 public class StudentRepositoryImpl implements StudentRepository {
     private Map<Long, Student> idToStudents = new HashMap<>();
     private static Long counter = 0L;

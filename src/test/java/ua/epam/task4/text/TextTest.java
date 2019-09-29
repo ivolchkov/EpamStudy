@@ -1,9 +1,6 @@
 package ua.epam.task4.text;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
@@ -36,6 +33,7 @@ public class TextTest {
     }
 
     @Test
+    @Ignore
     public void shouldReturnRightSentence() {
         Word[] words = {new Word("I"), new Word("am"), new Word("student"), new Word("of"), new Word("EPAM"), new Word("courses")};
         Sentence sentence = new Sentence();
@@ -48,6 +46,7 @@ public class TextTest {
     }
 
     @Test
+    @Ignore
     public void shouldRightAddWord() {
         Word[] words = {new Word("I"), new Word("am"), new Word("student"), new Word("of"), new Word("EPAM"), new Word("courses")};
         Sentence sentence = new Sentence();
