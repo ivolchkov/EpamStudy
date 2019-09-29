@@ -1,7 +1,7 @@
 package ua.epam.task4.text;
 
 
-public class Word {
+public class Word implements SentenceUnit {
     private String word;
 
     public Word(String word) {

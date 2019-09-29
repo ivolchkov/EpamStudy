@@ -1,21 +1,22 @@
 package classWork;
 
-public class Tryout {
-    static {
-        Byte[][] Byte = {{0}};
-        System.out.println(Byte.class);
-    }
-    public static void main(String[] args) {
-        System.out.println(Byte.class);
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-        float[] f1[], f2;
-//        final Integer i = 1;
-//
-//        switch (i) {
-//            case 1: System.out.println("1"); break;
-//            case 2: System.out.println("2"); break;
-//            default:System.out.println("default");
-//        }
+public class Tryout {
+
+    public static void main(String[] args) {
+        String email = "aaay@gmail.com grayka@gmail.com";
+        String regex = "(\\w{2,})@(\\w+\\p{Punct})([a-z]{2,5})";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+
+        while(matcher.find()) {
+            System.out.println("e-mail:" + matcher.group());
+        }
+
+
 
     }
 }

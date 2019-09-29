@@ -14,6 +14,9 @@ public final class StudentHandler {
     }
 
     public static void addStudent(Student student) {
+        if(student == null ) {
+            throw new IllegalArgumentException();
+        }
         students.add(student);
     }
 

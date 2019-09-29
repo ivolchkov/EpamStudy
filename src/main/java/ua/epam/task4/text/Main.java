@@ -10,9 +10,8 @@ public class Main {
         Sentence first = new Sentence();
         first.addWords(word1);
         first.addSign(sign1);
-        first.addSign(new Sign(' '));
         first.addWords(words);
-        first.addSign(dot);
+//        first.addSign(dot);
 
         Word[] secWords = {new Word("I"), new Word("have"), new Word("been"), new Word("studying"), new Word("for"), new Word("two"),
                 new Word("weeks"), new Word("and"), new Word("now"),new Word("I"), new Word("have"), new Word("this"), new Word("task") };
@@ -25,12 +24,12 @@ public class Main {
 
         study.setTextHead("Epam study");
         study.addSentence(first);
-        study.addSentence(second);
-        study.addSentence(second);
-        study.addSentence(second);study.addSentence(second);study.addSentence(second);study.addSentence(second);study.addSentence(second);
-        study.addSentence(second);study.addSentence(second);study.addSentence(second);study.addSentence(second);study.addSentence(second);
+//        study.addSentence(second);
+//        study.addSentence(second);
+//        study.addSentence(second);study.addSentence(second);study.addSentence(second);study.addSentence(second);study.addSentence(second);
+//        study.addSentence(second);study.addSentence(second);study.addSentence(second);study.addSentence(second);study.addSentence(second);
 
-
+      study.addWord(word1);
 
 
         System.out.println(study);

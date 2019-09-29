@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Text {
-    private String textHead;
+    private String textHead = "Default";
     private ArrayList<Sentence> sentences = new ArrayList<>();
 
     public Text() {}
@@ -26,6 +26,14 @@ public class Text {
         }
     }
 
+    public String getTextHead() {
+        return textHead;
+    }
+
+    public ArrayList<Sentence> getSentences() {
+        return sentences;
+    }
+
     public void setTextHead(String textHead) {
         this.textHead = textHead;
     }
@@ -40,11 +48,12 @@ public class Text {
             throw new IllegalArgumentException();
         }
 
-        Sentence last = sentences.get(sentences.size()-1);
+        Sentence last = this.sentences.get(sentences.size()-1);
 
         if ( last.getSentence().endsWith(".") ) {
             this.sentences.add(new Sentence(word));
         } else {
+            last.addSign(new Sign(' '));
             last.addWords(word);
         }
 

@@ -1,37 +1,31 @@
-package ua.epam.task4.text;
+package ua.epam.task5.text.domain;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 
 public class Sentence {
-    private ArrayList<SentenceUnit> words;
+    private final List<SentenceUnit> words;
 
-    public Sentence() {
-        this.words = new ArrayList<>();
+    public Sentence(List<SentenceUnit> words) {
+        this.words = words;
     }
 
-    public Sentence(Word word) {
-        this();
-        if ( word == null ) {
-            throw new IllegalArgumentException();
-        }
-        this.words.add(word);
-    }
-
-    public Sentence(Word... words) {
-        this();
-        this.addWords(words);
+    public List<SentenceUnit> getWords() {
+        return words;
     }
 
     public String getSentence() {
-        StringBuilder builder = new StringBuilder();
-
-        for ( SentenceUnit word: this.words ) {
-            builder.append(word.toString()).append(' ');
+        if ( words.isEmpty() ) {
+            return null;
         }
 
-        builder.deleteCharAt(builder.length()-1);
+        StringBuilder builder = new StringBuilder();
+
+        for ( SentenceUnit sentenceUnit: this.words ) {
+            builder.append(sentenceUnit.toString());
+        }
 
         return builder.toString();
     }
@@ -71,16 +65,10 @@ public class Sentence {
             throw new IllegalArgumentException();
         }
 
-        if ( this.words.isEmpty() ) {
-            StringBuilder result = new StringBuilder();
-        } else {
-            StringBuilder result = new StringBuilder(this.getSentence());
-        }
-
         this.words.addAll(Arrays.asList(words));
     }
 
-    public void addSign(Sign sign) {
+    public void addSign(PunctuationSymbol sign) {
         if ( sign == null ) {
             throw new IllegalArgumentException();
         }

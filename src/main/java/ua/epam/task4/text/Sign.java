@@ -2,7 +2,7 @@ package ua.epam.task4.text;
 
 import java.util.Objects;
 
-public class Sign {
+public class Sign implements SentenceUnit {
     private static char[] signs = {' ', '?', '!', ',', '.', ':', ';', '[', ']', '{' , '}' };
 
     private char sign;
