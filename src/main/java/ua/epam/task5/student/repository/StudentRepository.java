@@ -4,7 +4,8 @@ import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.domain.Student;
 
 import java.time.LocalDate;
-import java.util.TreeSet;
+import java.util.List;
+import java.util.Optional;
 
 //CRUD
 //C - create
@@ -16,15 +17,17 @@ public interface StudentRepository {
     Student save(Student student);
 
     //R
-    Student findById(Long id);
-    TreeSet<Student> findByDepartment(Department department);
-    TreeSet<Student> findByDepartmentAndCourse(Department department, int course);
-    TreeSet<Student> findByAge(LocalDate date);
-    TreeSet<Student> findByGroup(String group);
+    Optional<Student> findById(Long id);
+    Optional<Student> findByEmail(String email);
+    List<Student> findByDepartment(Department department);
+    List<Student> findByDepartmentAndCourse(Department department, int course);
+    List<Student> findByAge(LocalDate date);
+    List<Student> findByGroup(String group);
 
     //U
     void update(Student student);
 
     //D
-    Student deleteById(Long id);
+    Optional<Student> deleteById(Long id);
+    Optional<Student> deleteByEmail(String email);
 }

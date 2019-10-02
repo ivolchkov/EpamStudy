@@ -12,14 +12,14 @@ import ua.epam.task5.student.repository.StudentRepository;
 import ua.epam.task6.myJUnit.BeforeClass;
 
 import java.time.LocalDate;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DepartmentServiceImplTest {
-    private static TreeSet<Student> expected;
+    private static List<Student> expected;
     private static Department department = new Department(1L, "FEA");;
     private static String group = "EC-91p";
 
@@ -38,7 +38,7 @@ public class DepartmentServiceImplTest {
         LocalDate secondDate = LocalDate.of(1998, 11, 12);
         Student first = Student.build().withDepartment(department).withCourse(1).withDateOfBirth(firstDate).withGroup(group).build();
         Student second = Student.build().withDepartment(department).withCourse(1).withDateOfBirth(secondDate).withGroup(group).build();
-        expected = new TreeSet<>();
+        expected = new ArrayList<>();
         expected.add(first);
         expected.add(second);
     }
@@ -51,7 +51,7 @@ public class DepartmentServiceImplTest {
     @Test
     public void shouldReturnValidSearchByDepartment() {
         when(studentRepository.findByDepartment(department)).thenReturn(expected);
-        TreeSet<Student> actual = implementation.showDepartmentStudents(department);
+        List<Student> actual = implementation.showDepartmentStudents(department);
 
         verify(studentRepository, times(1)).findByDepartment(department);
         assertEquals(expected, actual);
@@ -60,7 +60,7 @@ public class DepartmentServiceImplTest {
     @Test
     public void shouldReturnValidSearchByDepartmentAndCourse() {
         when(studentRepository.findByDepartmentAndCourse(department, 1)).thenReturn(expected);
-        TreeSet<Student> actual = implementation.showDepartmentAndCourseStudents(department, 1);
+        List<Student> actual = implementation.showDepartmentAndCourseStudents(department, 1);
 
         verify(studentRepository, times(1)).findByDepartmentAndCourse(department, 1);
         assertEquals(expected, actual);
@@ -70,7 +70,7 @@ public class DepartmentServiceImplTest {
     public void shouldReturnValidSearchByAge() {
         LocalDate testDate = LocalDate.of(1999, 1, 1);
         when(studentRepository.findByAge(testDate)).thenReturn(expected);
-        TreeSet<Student> actual = implementation.showStudentsOlderThan(testDate);
+        List<Student> actual = implementation.showStudentsOlderThan(testDate);
 
         verify(studentRepository, times(1)).findByAge(testDate);
         assertEquals(expected, actual);
@@ -79,45 +79,50 @@ public class DepartmentServiceImplTest {
     @Test
     public void shouldReturnValidSearchByGroup() {
         when(studentRepository.findByGroup(DepartmentServiceImplTest.group)).thenReturn(expected);
-        TreeSet<Student> actual = implementation.showGroup(group);
+        List<Student> actual = implementation.showGroup(group);
 
         verify(studentRepository, times(1)).findByGroup(group);
         assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldThrowNullPointerExceptionWhenSearchingByDep() {
-        exception.expect(NullPointerException.class);
-        exception.expectMessage("Invalid department");
-        implementation.showDepartmentStudents(null);
+    public void shouldReturnEmptyListWhenSearchingByDep() {
+        List<Student> expected = Collections.emptyList();
+        List<Student> actual = implementation.showDepartmentStudents(null);
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldThrowNullPointerExceptionWhenSearchingByDepAndCourse() {
-        exception.expect(NullPointerException.class);
-        exception.expectMessage("Invalid department");
-        implementation.showDepartmentAndCourseStudents(null, 1);
+    public void shouldReturnEmptyListWhenSearchingByDepAndCourse() {
+        List<Student> expected = Collections.emptyList();
+        List<Student> actual = implementation.showDepartmentAndCourseStudents(null, 1);
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldThrowNullPointerExceptionWhenSearchingByAge() {
-        exception.expect(NullPointerException.class);
-        exception.expectMessage("Invalid date");
-        implementation.showStudentsOlderThan(null);
+    public void shouldReturnEmptyListWhenSearchingByAge() {
+        List<Student> expected = Collections.emptyList();
+        List<Student> actual = implementation.showStudentsOlderThan(null);
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldThrowNullPointerExceptionWhenSearchingByGroup() {
-        exception.expect(NullPointerException.class);
-        exception.expectMessage("Invalid group");
-        implementation.showGroup(null);
+    public void shouldReturnEmptyListWhenSearchingByGroup() {
+        List<Student> expected = Collections.emptyList();
+        List<Student> actual = implementation.showGroup(null);
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldThrowNullPointerExceptionWhenSearchingById() {
-        exception.expect(NullPointerException.class);
-        exception.expectMessage("Invalid identification");
-        implementation.showStudent(null);
+    public void shouldReturnEmptyListWhenSearchingById() {
+        Optional<Student> expected = Optional.empty();
+        Optional<Student> actual = implementation.showStudent(null);
+
+        assertEquals(expected, actual);
     }
 
 }

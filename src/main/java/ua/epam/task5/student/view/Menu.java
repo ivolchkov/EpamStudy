@@ -1,34 +1,37 @@
 package ua.epam.task5.student.view;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ua.epam.task5.student.configuration.DIConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ua.epam.task5.student.domain.Address;
 import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.domain.PhoneNumber;
 import ua.epam.task5.student.domain.Student;
-import ua.epam.task5.student.repository.StudentRepositoryImpl;
+import ua.epam.task5.student.exception.StudentNotFoundException;
 import ua.epam.task5.student.service.DepartmentServiceImpl;
 import ua.epam.task5.student.service.StudentServiceImpl;
 
 import java.time.LocalDate;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.*;
 
+@Component
 public class Menu {
-    public static final AnnotationConfigApplicationContext CONTEXT = new AnnotationConfigApplicationContext(DIConfiguration.class);
     private static final ResourceManager MANAGER = ResourceManager.INSTANCE;
-    private static final StudentRepositoryImpl REPOSITORY = CONTEXT.getBean(StudentRepositoryImpl.class);
-    private static final StudentServiceImpl STUDENT_SERVICE = CONTEXT.getBean(StudentServiceImpl.class);
-    private static final DepartmentServiceImpl DEPARTMENT_SERVICE = CONTEXT.getBean(DepartmentServiceImpl.class);
     private static final Scanner IN = new Scanner(System.in);
     public static final String LANGUAGE = "Select an appropriate language:\n" + "1)Russian\n" + "2)German\n" + "3)Default(English)";
 
-    public void run(){
+    private final StudentServiceImpl studentService;
+    private final DepartmentServiceImpl departmentService;
+
+    @Autowired
+    public Menu(StudentServiceImpl studentService, DepartmentServiceImpl departmentService) {
+        this.studentService = studentService;
+        this.departmentService = departmentService;
+    }
+
+    public void run() {
         autoRegistration();
-        int language = 0;
-        int choice = 0;
+        int language;
+        int choice;
 
         System.out.println(LANGUAGE);
 
@@ -39,15 +42,21 @@ public class Menu {
         choice = IN.nextInt();
 
         switch (choice) {
-            case 1: signUp(); break;
-            case 2: signIn(); break;
+            case 1:
+                signUp();
+                break;
+            case 2:
+                signIn();
+                break;
             default:
                 System.out.println(MANAGER.getString("invalidChoice"));
         }
     }
 
     private void selectLanguage(int language) {
-        String country, languageLocale;
+        String country;
+        String languageLocale;
+
         switch (language) {
             case 1: {
                 country = "ru";
@@ -73,6 +82,7 @@ public class Menu {
         String surname;
         String secondName;
         String email;
+        String password;
         int yearOfBirth;
         int monthOfBirth;
         int dayOfBirth;
@@ -95,6 +105,8 @@ public class Menu {
         secondName = IN.next();
         System.out.println(MANAGER.getString("registration.email"));
         email = IN.next();
+        System.out.println(MANAGER.getString("registration.password"));
+        password = IN.next();
         System.out.println(MANAGER.getString("registration.birth"));
         yearOfBirth = IN.nextInt();
         monthOfBirth = IN.nextInt();
@@ -137,6 +149,7 @@ public class Menu {
                 withSurname(surname).
                 withSecondName(secondName).
                 withEmail(email).
+                withPassword(password).
                 withDateOfBirth(date).
                 withAddress(address).
                 withPhoneNumber(phoneNumber).
@@ -145,7 +158,7 @@ public class Menu {
                 withGroup(group).
                 build();
 
-        STUDENT_SERVICE.register(student);
+        studentService.register(student);
 
         System.out.println(MANAGER.getString("registration.success"));
         System.out.println(MANAGER.getString("registration.yourId") + student.getId());
@@ -153,7 +166,7 @@ public class Menu {
 
         int signIn = IN.nextInt();
 
-        if ( signIn == 1 ) {
+        if (signIn == 1) {
             signIn();
         } else {
             System.out.println(MANAGER.getString("registration.goodBye"));
@@ -162,24 +175,19 @@ public class Menu {
     }
 
     private void signIn() {
-        Long id;
-        String name;
+        String email;
+        String password;
 
-        System.out.println(MANAGER.getString("login.id"));
-        id = IN.nextLong();
-        IN.nextLine();
-        System.out.println(MANAGER.getString("login.name"));
-        name = IN.nextLine();
+        System.out.println(MANAGER.getString("login.email"));
+        email = IN.next();
+        System.out.println(MANAGER.getString("login.password"));
+        password = IN.next();
 
-        Student student = DEPARTMENT_SERVICE.showStudent(id);
-        Objects.requireNonNull(student, "Student has not been found");
+        Optional<Student> student = studentService.login(email, password);
 
-        if ( student.getName().equals(name) ) {
-            operationService(student);
-        } else {
-            System.out.println(MANAGER.getString("login.invalidOperation"));
-        }
+        student.ifPresent(this::operationService);
 
+        System.out.println(MANAGER.getString("login.invalidOperation"));
     }
 
     private void operationService(Student student) {
@@ -190,36 +198,40 @@ public class Menu {
             int choice = IN.nextInt();
 
             switch (choice) {
-                case 1 : {
+                case 1: {
                     operationFindByDep();
                     break;
                 }
-                case 2 : {
+                case 2: {
                     operationFindByDepAndCourse();
                     break;
                 }
-                case 3 : {
+                case 3: {
                     operationFindByAge();
                     break;
                 }
-                case 4 : {
-                    TreeSet<Student> students = DEPARTMENT_SERVICE.showGroup(student.getGroup());
+                case 4: {
+                    List<Student> students = departmentService.showGroup(student.getGroup());
 
-                    for (Student s: students) {
+                    for (Student s : students) {
                         System.out.println(s);
                     }
 
                     break;
                 }
-                case 5 : {
+                case 5: {
                     isFinish = true;
+                    break;
+                }
+                default: {
+                    throw new IllegalArgumentException("Invalid operation");
                 }
             }
         }
     }
 
     private void operationFindByDep() {
-        TreeSet<Student> students;
+        List<Student> students;
         Long id;
         String departmentName;
         Department department;
@@ -230,17 +242,17 @@ public class Menu {
         id = IN.nextLong();
 
         department = new Department(id, departmentName);
-        students = DEPARTMENT_SERVICE.showDepartmentStudents(department);
+        students = departmentService.showDepartmentStudents(department);
 
         Objects.requireNonNull(students, "There are no students in this department");
 
-        for (Student s: students) {
+        for (Student s : students) {
             System.out.println(s);
         }
     }
 
     private void operationFindByDepAndCourse() {
-        TreeSet<Student> students;
+        List<Student> students;
         Long id;
         String departmentName;
         int course;
@@ -254,17 +266,17 @@ public class Menu {
         course = IN.nextInt();
 
         department = new Department(id, departmentName);
-        students = DEPARTMENT_SERVICE.showDepartmentAndCourseStudents(department, course);
+        students = departmentService.showDepartmentAndCourseStudents(department, course);
 
         Objects.requireNonNull(students, "There are no students in this department and on this year of study");
 
-        for (Student s: students) {
+        for (Student s : students) {
             System.out.println(s);
         }
     }
 
     private void operationFindByAge() {
-        TreeSet<Student> students;
+        List<Student> students;
         int yearOfBirth;
         int monthOfBirth;
         int dayOfBirth;
@@ -276,11 +288,11 @@ public class Menu {
         dayOfBirth = IN.nextInt();
 
         date = LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
-        students = DEPARTMENT_SERVICE.showStudentsOlderThan(date);
+        students = departmentService.showStudentsOlderThan(date);
 
         Objects.requireNonNull(students, "There are no students older than you chose");
 
-        for (Student s: students) {
+        for (Student s : students) {
             System.out.println(s);
         }
     }
@@ -330,6 +342,7 @@ public class Menu {
                 withSurname("Volchkov").
                 withSecondName("Vasilyevich").
                 withEmail("igorik@ua.fm").
+                withPassword("Vfkmdbyf1997").
                 withAddress(address1).
                 withDateOfBirth(LocalDate.of(1997, 11, 12)).
                 withPhoneNumber(number).
@@ -343,6 +356,7 @@ public class Menu {
                 withSurname("Ilchenko").
                 withSecondName("Vasilyevich").
                 withEmail("dimachka@gmail.com").
+                withPassword("Lbvfbkmxtyrj1997").
                 withAddress(address2).
                 withDateOfBirth(LocalDate.of(1997, 12, 21)).
                 withPhoneNumber(number).
@@ -356,6 +370,7 @@ public class Menu {
                 withSurname("Kovtanyuk").
                 withSecondName("Olegovna").
                 withEmail("marthakovtanyuk@gmail.com").
+                withPassword("Lbvfbkmxtyrj1997").
                 withAddress(address3).
                 withDateOfBirth(LocalDate.of(1998, 7, 31)).
                 withPhoneNumber(number).
@@ -369,6 +384,7 @@ public class Menu {
                 withSurname("Lopuha").
                 withSecondName("Viktorovich").
                 withEmail("valentynych@gmail.com").
+                withPassword("Lbvfbkmxtyrj1997").
                 withAddress(address4).
                 withDateOfBirth(LocalDate.of(1999, 1, 23)).
                 withPhoneNumber(number).
@@ -382,6 +398,7 @@ public class Menu {
                 withSurname("Piznak").
                 withSecondName("Vasilyovich").
                 withEmail("044roseclan@gmail.com").
+                withPassword("Lbvfbkmxtyrj1997").
                 withAddress(address5).
                 withDateOfBirth(LocalDate.of(1998, 9, 19)).
                 withPhoneNumber(number).
@@ -394,6 +411,7 @@ public class Menu {
                 withSurname("Samsonov").
                 withSecondName("Andreevich").
                 withEmail("computerMining@gmail.com").
+                withPassword("Lbvfbkmxtyrj1997").
                 withAddress(address6).
                 withDateOfBirth(LocalDate.of(1998, 2, 23)).
                 withPhoneNumber(number).
@@ -403,13 +421,12 @@ public class Menu {
                 build();
 
 
-
-        STUDENT_SERVICE.register(volchkov);
-        STUDENT_SERVICE.register(ilchenko);
-        STUDENT_SERVICE.register(lopuha);
-        STUDENT_SERVICE.register(samsonov);
-        STUDENT_SERVICE.register(piznak);
-        STUDENT_SERVICE.register(kovtanyuk);
+        studentService.register(volchkov);
+        studentService.register(ilchenko);
+        studentService.register(lopuha);
+        studentService.register(samsonov);
+        studentService.register(piznak);
+        studentService.register(kovtanyuk);
 
     }
 }

@@ -1,18 +1,49 @@
 package ua.epam.task5.student.service.validator;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.springframework.stereotype.Component;
 import ua.epam.task5.student.domain.Student;
+import ua.epam.task5.student.exception.InvalidRegistrationException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class StudentValidator implements Validator<Student> {
+    private static final Logger LOGGER = Logger.getLogger("file");
+
     @Override
     public void validate(Student student) {
+        try {
+            if (student == null) {
+                throw new InvalidRegistrationException("Student is not valid");
+            }
+        } catch (InvalidRegistrationException e) {
+            LOGGER.error("Student is not valid", e);
+            throw new RuntimeException(e);
+        }
         validateName(student.getName());
         validateSurname(student.getSurname());
         validateSecondName(student.getSecondName());
         validateEmail(student.getEmail());
+        validatePassword(student.getPassword());
         validatePhoneNumber(student.getPhoneNumber().getCode(), student.getPhoneNumber().getNumber());
+    }
+
+    private void validatePassword(String password) {
+        String regex = "[A-Z]\\w{4,}";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+
+        try {
+            if (!matcher.find()) {
+                throw new InvalidRegistrationException("Incorrect password");
+            }
+        } catch (InvalidRegistrationException e) {
+            LOGGER.error("Incorrect password", e);
+            throw new RuntimeException(e);
+        }
     }
 
     private void validateEmail(String email) {
@@ -20,8 +51,13 @@ public class StudentValidator implements Validator<Student> {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
 
-        if (!matcher.find()) {
-            throw new IllegalArgumentException("Incorrect e-mail");
+        try {
+            if (!matcher.find()) {
+                throw new InvalidRegistrationException("Incorrect e-mail");
+            }
+        } catch (InvalidRegistrationException e) {
+            LOGGER.error("Incorrect e-mail", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -30,8 +66,13 @@ public class StudentValidator implements Validator<Student> {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(name);
 
-        if (!matcher.find()) {
-            throw new IllegalArgumentException("Incorrect name");
+        try {
+            if (!matcher.find()) {
+                throw new InvalidRegistrationException("Incorrect name");
+            }
+        } catch (InvalidRegistrationException e) {
+            LOGGER.error("Incorrect name", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -40,8 +81,13 @@ public class StudentValidator implements Validator<Student> {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(surname);
 
-        if (!matcher.find()) {
-            throw new IllegalArgumentException("Incorrect surname");
+        try {
+            if (!matcher.find()) {
+                throw new InvalidRegistrationException("Incorrect surname");
+            }
+        } catch (InvalidRegistrationException e) {
+            LOGGER.error("Incorrect surname", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -50,8 +96,13 @@ public class StudentValidator implements Validator<Student> {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(secondName);
 
-        if (!matcher.find()) {
-            throw new IllegalArgumentException("Incorrect second name");
+        try {
+            if (!matcher.find()) {
+                throw new InvalidRegistrationException("Incorrect second name");
+            }
+        } catch (InvalidRegistrationException e) {
+            LOGGER.error("Incorrect second name", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -63,8 +114,13 @@ public class StudentValidator implements Validator<Student> {
         Pattern patternNumber = Pattern.compile(regexNumber);
         Matcher matcherNumber = patternNumber.matcher(number);
 
-        if (!matcherCode.find() || !matcherNumber.find() ) {
-            throw new IllegalArgumentException("Incorrect phone number");
+        try {
+            if (!matcherCode.find() || !matcherNumber.find()) {
+                throw new InvalidRegistrationException("Incorrect phone number");
+            }
+        } catch (InvalidRegistrationException e) {
+            LOGGER.error("Incorrect phone number", e);
+            throw new RuntimeException(e);
         }
     }
 

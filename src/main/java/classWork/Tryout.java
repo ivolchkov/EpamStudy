@@ -22,6 +22,12 @@ public class Tryout {
         while(matcher.find()) {
             System.out.println("second name " + matcher.group());
         }
+
+        switch(new Integer(4)) {
+            case 4 : {
+                System.out.println(4);
+            }
+        }
     }
 }
 

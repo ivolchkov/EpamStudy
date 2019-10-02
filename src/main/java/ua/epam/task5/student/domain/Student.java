@@ -1,10 +1,8 @@
 package ua.epam.task5.student.domain;
 
 import java.time.LocalDate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class Student implements Comparable<Student> {
+public class Student {
     private Long id;
     private String surname;
     private String name;
@@ -16,6 +14,7 @@ public class Student implements Comparable<Student> {
     private Department department;
     private int course;
     private String group;
+    private String password;
 
     private Student(StudentBuilder studentBuilder) {
         this.surname = studentBuilder.surname;
@@ -28,6 +27,7 @@ public class Student implements Comparable<Student> {
         this.department = studentBuilder.department;
         this.course = studentBuilder.course;
         this.group = studentBuilder.group;
+        this.password = studentBuilder.password;
 
         BuilderSetId.setId(this);
     }
@@ -74,6 +74,10 @@ public class Student implements Comparable<Student> {
 
     public String getGroup() {
         return group;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -146,11 +150,9 @@ public class Student implements Comparable<Student> {
         return new StudentBuilder();
     }
 
-    @Override
-    public int compareTo(Student other) {
-        return (int) (this.id - other.id);
+    public static BuilderSetPassword buildPassword() {
+        return new BuilderSetPassword();
     }
-
 
     public static class StudentBuilder {
         private Long id = null;
@@ -164,6 +166,7 @@ public class Student implements Comparable<Student> {
         private Department department;
         private int course;
         private String group;
+        private String password;
 
         private StudentBuilder() {}
         
@@ -229,6 +232,12 @@ public class Student implements Comparable<Student> {
             return this;
         }
 
+        public StudentBuilder withPassword(String password) {
+            this.password = password;
+
+            return this;
+        }
+
         public Student build() {
             return new Student(this);
         }
@@ -241,8 +250,17 @@ public class Student implements Comparable<Student> {
             throw new RuntimeException();
         }
         
-        public static void setId(Student student) {
+        private static void setId(Student student) {
             student.id = ++counter;
+        }
+    }
+
+    public static class BuilderSetPassword {
+        private BuilderSetPassword() {
+        }
+
+        public void setPassword(Student student, String password) {
+            student.password = password;
         }
     }
 }

@@ -5,10 +5,7 @@ import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.domain.Student;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeSet;
+import java.util.*;
 
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
@@ -21,13 +18,28 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public Student findById(Long id) {
-        return idToStudents.get(id);
+    public Optional<Student> findById(Long id) {
+        return Optional.ofNullable(idToStudents.get(id));
     }
 
     @Override
-    public TreeSet<Student> findByDepartment(Department department) {
-        TreeSet<Student> suitableStudents = new TreeSet<Student>();
+    public Optional<Student> findByEmail(String email) {
+        Optional<Student> student = Optional.empty();
+
+        for (Student s: idToStudents.values()) {
+            if ( Objects.equals(s.getEmail(), email) ) {
+                student = Optional.of(s);
+
+                return student;
+            }
+        }
+
+        return student;
+    }
+
+    @Override
+    public List<Student> findByDepartment(Department department) {
+        List<Student> suitableStudents = new ArrayList<Student>();
 
         for (Student student: idToStudents.values()) {
             if ( Objects.equals(student.getDepartment(), department) ) {
@@ -39,8 +51,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public TreeSet<Student> findByDepartmentAndCourse(Department department, int course) {
-        TreeSet<Student> suitableStudents = new TreeSet<Student>();
+    public List<Student> findByDepartmentAndCourse(Department department, int course) {
+        List<Student> suitableStudents = new ArrayList<Student>();
 
         for (Student student: idToStudents.values()) {
             if ( Objects.equals(student.getDepartment(), department) && student.getCourse() == course )  {
@@ -52,8 +64,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public TreeSet<Student> findByAge(LocalDate date) {
-        TreeSet<Student> suitableStudents = new TreeSet<Student>();
+    public List<Student> findByAge(LocalDate date) {
+        List<Student> suitableStudents = new ArrayList<Student>();
 
         for (Student student: idToStudents.values()) {
             if ( student.getDateOfBirth().compareTo(date) < 0 )  {
@@ -65,8 +77,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public TreeSet<Student> findByGroup(String group) {
-        TreeSet<Student> suitableStudents = new TreeSet<Student>();
+    public List<Student> findByGroup(String group) {
+        List<Student> suitableStudents = new ArrayList<Student>();
 
         for (Student student: idToStudents.values()) {
             if ( Objects.equals(student.getGroup(), group) )  {
@@ -83,7 +95,18 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public Student deleteById(Long id) {
-        return idToStudents.remove(id);
+    public Optional<Student> deleteById(Long id) {
+        return Optional.ofNullable(idToStudents.remove(id));
+    }
+
+    @Override
+    public Optional<Student> deleteByEmail(String email) {
+        for (Student student: idToStudents.values()) {
+            if ( Objects.equals(student.getEmail(), email) )  {
+                return Optional.of(idToStudents.remove(student.getId()));
+            }
+        }
+
+        return Optional.empty();
     }
 }
