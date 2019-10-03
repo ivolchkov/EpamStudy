@@ -1,6 +1,6 @@
 package classWork;
 
-public class A {
+public class A implements Comparable<A>{
     int id;
 
     public A(int id) {
@@ -37,5 +37,10 @@ public class A {
 
 
 
+    }
+
+    @Override
+    public int compareTo(A a) {
+        return 0;
     }
 }

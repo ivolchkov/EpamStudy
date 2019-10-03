@@ -1,7 +1,6 @@
 package ua.epam.task5.student.service.validator;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.springframework.stereotype.Component;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.exception.InvalidRegistrationException;

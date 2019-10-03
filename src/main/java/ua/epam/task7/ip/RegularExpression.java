@@ -12,7 +12,7 @@ public class RegularExpression {
     }
 
     private static void Ipv4(String example) {
-        String regex = "((25[0-5]|[0-1]?[0-9][0-9]?|2[0-4][0-9])\\.){3}(25[0-5]|[0-1]?[0-9][0-9]?|2[0-4][0-9])";
+        String regex = "((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]?[0-9])";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(example);
 
@@ -22,7 +22,7 @@ public class RegularExpression {
     }
 
     private static void Ipv6(String example) {
-        String regex = "(((\\w){0,4}:){2,7})((\\w){0,4})";
+        String regex = "((([A-Fa-f0-9]){0,4}:){2,7})(([A-Fa-f0-9]){0,4})";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(example);
 

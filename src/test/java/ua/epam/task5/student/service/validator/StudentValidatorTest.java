@@ -1,15 +1,13 @@
 package ua.epam.task5.student.service.validator;
 
 import org.hamcrest.Matcher;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import ua.epam.task5.student.domain.PhoneNumber;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.exception.InvalidRegistrationException;
-import ua.epam.task6.myJUnit.BeforeClass;
-
-import static org.junit.Assert.*;
 
 public class StudentValidatorTest {
     private static StudentValidator validator;

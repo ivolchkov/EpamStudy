@@ -16,11 +16,11 @@ public final class Runner {
         Class<?> clazz = testClass.getClass();
         Method[] methods = clazz.getMethods();
 
-        List<Method> beforeClassMethods = getMethodByAnnotation(methods, BeforeClass.class);
-        List<Method> afterClassMethods = getMethodByAnnotation(methods, AfterClass.class);
-        List<Method> testMethods = getMethodByAnnotation(methods, Test.class);
-        List<Method> beforeMethods = getMethodByAnnotation(methods, Before.class);
-        List<Method> afterMethods = getMethodByAnnotation(methods, After.class);
+        List<Method> beforeClassMethods = getMethodByAnnotation(methods, BeforeClassMy.class);
+        List<Method> afterClassMethods = getMethodByAnnotation(methods, AfterClassMy.class);
+        List<Method> testMethods = getMethodByAnnotation(methods, TestMy.class);
+        List<Method> beforeMethods = getMethodByAnnotation(methods, BeforeMy.class);
+        List<Method> afterMethods = getMethodByAnnotation(methods, AfterMy.class);
 
         invokeMethods(beforeClassMethods, null);
         invokeTestMethods(beforeMethods, testMethods, afterMethods,testClass);

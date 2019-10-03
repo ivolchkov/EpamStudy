@@ -1,26 +1,26 @@
 package ua.epam.task6.myJUnit;
 
 public class TestClass {
-    @BeforeClass
+    @BeforeClassMy
     public static  void staticInit(){
         System.out.println("Static");
     }
 
-    @Before
+    @BeforeMy
     public void beforeInit() {
         System.out.println("Before init");
     }
 
-    @After
+    @AfterMy
     public void afterInit() {
         System.out.println("After init");
     }
-    @Test
+    @TestMy
     public void shouldReturnResult1(){
         System.out.println("Result1");
     }
 
-    @Test
+    @TestMy
     public void shouldReturnResult2(){
         System.out.println("Result2");
     }

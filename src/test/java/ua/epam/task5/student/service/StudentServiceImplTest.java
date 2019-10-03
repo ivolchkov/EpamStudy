@@ -1,13 +1,11 @@
 package ua.epam.task5.student.service;
 
 import org.hamcrest.Matcher;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import ua.epam.task5.student.domain.PhoneNumber;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.exception.AlreadyRegisteredException;
-import ua.epam.task5.student.exception.InvalidRegistrationException;
 import ua.epam.task5.student.repository.StudentRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -18,12 +16,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ua.epam.task5.student.service.encode.PasswordEncoder;
 import ua.epam.task5.student.service.validator.Validator;
 
-import javax.swing.text.html.Option;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

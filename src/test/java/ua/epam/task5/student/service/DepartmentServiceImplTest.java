@@ -9,7 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.repository.StudentRepository;
-import ua.epam.task6.myJUnit.BeforeClass;
+
 
 import java.time.LocalDate;
 import java.util.*;

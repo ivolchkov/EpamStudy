@@ -10,11 +10,10 @@ import java.util.*;
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
     private Map<Long, Student> idToStudents = new HashMap<>();
-    private static Long counter = 0L;
 
     @Override
     public Student save(Student student) {
-        return idToStudents.put(++counter,student);
+        return idToStudents.put(student.getId(),student);
     }
 
     @Override
