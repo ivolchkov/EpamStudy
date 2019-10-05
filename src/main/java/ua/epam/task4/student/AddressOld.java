@@ -2,13 +2,13 @@ package ua.epam.task4.student;
 
 import java.util.Objects;
 
-public class Address {
+public class AddressOld {
     private String city;
     private String street;
     private int streetNumber;
     private int flatNumber;
 
-    private Address(AddressBuilder addressBuilder) {
+    private AddressOld(AddressBuilder addressBuilder) {
         this.city = addressBuilder.city;
         this.street = addressBuilder.street;
         this.flatNumber = addressBuilder.flatNumber;
@@ -35,7 +35,7 @@ public class Address {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
+        AddressOld address = (AddressOld) o;
         return streetNumber == address.streetNumber &&
                 flatNumber == address.flatNumber &&
                 Objects.equals(city, address.city) &&
@@ -95,8 +95,8 @@ public class Address {
             return this;
         }
 
-        public Address build() {
-            return new Address(this);
+        public AddressOld build() {
+            return new AddressOld(this);
         }
 
     }

@@ -1,50 +1,48 @@
 package ua.epam.task4.student;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
-        Address address1 = Address.build().
+        AddressOld address1 = AddressOld.build().
                 withCity("Kiev").
                 withStreet("Khreshatik").
                 withStreetNumber(25).
                 withFlatNumber(75).
                 build();
-        Address address2 = Address.build().
+        AddressOld address2 = AddressOld.build().
                 withCity("Kiev").
                 withStreet("Peremohy").
                 withStreetNumber(31).
                 withFlatNumber(24).
                 build();
-        Address address3 = Address.build().
+        AddressOld address3 = AddressOld.build().
                 withCity("Kiev").
                 withStreet("Borshahovskaya").
                 withStreetNumber(148).
                 withFlatNumber(12).
                 build();
-        Address address4 = Address.build().
+        AddressOld address4 = AddressOld.build().
                 withCity("Kiev").
                 withStreet("Borshahovskaya").
                 withStreetNumber(148).
                 withFlatNumber(77).
                 build();
-        Address address5 = Address.build().
+        AddressOld address5 = AddressOld.build().
                 withCity("Kiev").
                 withStreet("Voskresenskaya").
                 withStreetNumber(23).
                 withFlatNumber(48).
                 build();
-        Address address6 = Address.build().
+        AddressOld address6 = AddressOld.build().
                 withCity("Kiev").
                 withStreet("Druzhby Narodov").
                 withStreetNumber(55).
                 withFlatNumber(78).
                 build();
 
-        Student volchkov = Student.build().
+        StudentOld volchkov = StudentOld.build().
                 withId(1).
                 withName("Ihor").
                 withSurname("Volchkov").
@@ -57,7 +55,7 @@ public class Main {
                 withGroup("EC-91m").
                 build();
 
-        Student ilchenko = Student.build().
+        StudentOld ilchenko = StudentOld.build().
                 withId(2).
                 withName("Dmitrii").
                 withSurname("Ilchenko").
@@ -70,7 +68,7 @@ public class Main {
                 withGroup("EC-91m").
                 build();
 
-        Student kovtanyuk = Student.build().
+        StudentOld kovtanyuk = StudentOld.build().
                 withId(3).
                 withName("Marta").
                 withSurname("Kovtanyuk").
@@ -83,7 +81,7 @@ public class Main {
                 withGroup("UM-91m").
                 build();
 
-        Student lopuha = Student.build().
+        StudentOld lopuha = StudentOld.build().
                 withId(4).
                 withName("Valentyn").
                 withSurname("Lopuha").
@@ -96,7 +94,7 @@ public class Main {
                 withGroup("UM-91m").
                 build();
 
-        Student piznak = Student.build().
+        StudentOld piznak = StudentOld.build().
                 withId(5).
                 withName("Vasiliy").
                 withSurname("Piznak").
@@ -108,7 +106,7 @@ public class Main {
                 withCourse(5).
                 withGroup("IC-91m").
                 build();
-        Student samsonov = Student.build().
+        StudentOld samsonov = StudentOld.build().
                 withId(6).
                 withName("Denys").
                 withSurname("Samsonov").
@@ -155,11 +153,11 @@ public class Main {
 //            System.out.println(student);
 //        }
 
-        TreeSet<Student> fac = new TreeSet<>();
+        TreeSet<StudentOld> fac = new TreeSet<>();
 
         fac = StudentHandler.getGroup("EP-41");
 
-        for ( Student student : fac) {
+        for ( StudentOld student : fac) {
             System.out.println(student);
         }
     }

@@ -2,8 +2,8 @@ package ua.epam.task8.collection;
 
 public class Main {
     public static void main(String[] args) {
-        List<Integer> arrList = new ArrayList<>();
-        List<Integer> linkedList = new LinkedList<>();
+        List<Integer> arrList = new MyArrayList<>();
+        List<Integer> linkedList = new MyLinkedList<>();
 
         System.out.println(arrList);
         System.out.println(linkedList);

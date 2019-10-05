@@ -8,7 +8,7 @@ import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 
 public class LinkedListTest {
-    private static  LinkedList<Integer> linkedList;
+    private static MyLinkedList<Integer> linkedList;
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -16,7 +16,7 @@ public class LinkedListTest {
     @BeforeClass
     public static void initLinkedList() {
         Integer[] arr = {1, 2, 3, 4, 5};
-        linkedList = new LinkedList<>();
+        linkedList = new MyLinkedList<>();
 
         for (Integer element: arr) {
             linkedList.add(element);

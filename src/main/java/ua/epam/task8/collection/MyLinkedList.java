@@ -3,13 +3,13 @@ package ua.epam.task8.collection;
 import java.awt.*;
 import java.util.Objects;
 
-public class LinkedList<E> implements List<E> {
+public class MyLinkedList<E> implements List<E> {
     private Node<E> head;
     private Node<E> current;
 
     private int size = 0;
 
-    public LinkedList() {
+    public MyLinkedList() {
         this.head = new Node<>(null, null, null);
         this.current = new Node<>(null, null, null);
     }

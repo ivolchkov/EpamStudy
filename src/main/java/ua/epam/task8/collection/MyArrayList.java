@@ -2,22 +2,24 @@ package ua.epam.task8.collection;
 
 import java.util.Objects;
 
-public class ArrayList<E> implements List<E> {
+public class MyArrayList<E> implements List<E> {
+    public static final int DEFAULT_SIZE = 10;
+
     private E[] array;
-    private int capacity;
+    private int capacity = DEFAULT_SIZE;
     private int size = 0;
 
-    public ArrayList() {
-        this.array = (E[]) new Object[10];
+    public MyArrayList() {
+        this.array = (E[]) new Object[DEFAULT_SIZE];
         this.capacity = array.length;
     }
 
-    public ArrayList(int capacity) {
+    public MyArrayList(int capacity) {
         this.array = (E[]) new Object[capacity];
         this.capacity = capacity;
     }
 
-    public ArrayList(E[] array) {
+    public MyArrayList(E[] array) {
         this.array = array;
         this.capacity = array.length;
         this.size = this.capacity;
@@ -68,6 +70,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public void clean() {
         this.array = null;
+        capacity = DEFAULT_SIZE;
         this.size = 0;
     }
 

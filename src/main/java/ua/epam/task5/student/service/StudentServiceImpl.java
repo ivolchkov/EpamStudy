@@ -8,7 +8,8 @@ import ua.epam.task5.student.exception.AlreadyRegisteredException;
 import ua.epam.task5.student.exception.StudentNotFoundException;
 import ua.epam.task5.student.repository.StudentRepository;
 import ua.epam.task5.student.service.encode.PasswordEncoder;
-import ua.epam.task5.student.service.validator.Validator;
+import ua.epam.task5.student.service.mapper.StudentMapper;
+import ua.epam.task5.student.view.domainFront.StudentFront;
 
 import java.util.Optional;
 
@@ -18,37 +19,34 @@ public class StudentServiceImpl implements StudentService {
     private static final Logger LOGGER = Logger.getLogger("file");
 
     private final StudentRepository studentRepository;
-    private final Validator<Student> validator;
+    private final StudentMapper mapper;
     private final PasswordEncoder encoder;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, Validator<Student> validator, PasswordEncoder encoder) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper mapper, PasswordEncoder encoder) {
         this.studentRepository = studentRepository;
-        this.validator = validator;
+        this.mapper = mapper;
         this.encoder = encoder;
     }
 
     @Override
-    public Optional<Student> register(Student student) {
-        this.validator.validate(student);
+    public Student register(StudentFront studentFront) {
+        Student student = mapper.convertFrontToBack(studentFront);
 
         try {
             if (studentRepository.findByEmail(student.getEmail()).isPresent()) {
                 throw new AlreadyRegisteredException("Student is already registered by this e-mail");
             }
         } catch (AlreadyRegisteredException e) {
-            LOGGER.error("Student is already registered by this e-mail", e);
-            throw new RuntimeException(e);
+            LOGGER.warn("Student is already registered by this e-mail", e);
+            return null;
         }
 
-        String encodedPassword = encoder.encode(student.getPassword());
-        Student.buildPassword().setPassword(student, encodedPassword);
-
-        return Optional.ofNullable(studentRepository.save(student));
+        return studentRepository.save(student);
     }
 
     @Override
-    public Optional<Student> login(String email, String password) {
+    public Student login(String email, String password) {
         String encodedPassword = encoder.encode(password);
         final Optional<Student> user = studentRepository.findByEmail(email);
 
@@ -58,18 +56,18 @@ public class StudentServiceImpl implements StudentService {
             } else {
                 try {
                     if (user.get().getPassword().equals(encodedPassword)) {
-                        return user;
+                        return user.get();
                     } else {
                         throw new StudentNotFoundException("Incorrect password");
                     }
                 } catch (StudentNotFoundException e) {
-                    LOGGER.error("Incorrect password", e);
+                    LOGGER.warn("Incorrect password", e);
                 }
             }
         } catch (StudentNotFoundException e) {
-            LOGGER.error("There is no student with this e-mail", e);
+            LOGGER.warn("There is no student with this e-mail", e);
         }
 
-        return Optional.empty();
+        return null;
     }
 }

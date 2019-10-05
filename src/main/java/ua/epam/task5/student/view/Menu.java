@@ -9,6 +9,7 @@ import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.exception.StudentNotFoundException;
 import ua.epam.task5.student.service.DepartmentServiceImpl;
 import ua.epam.task5.student.service.StudentServiceImpl;
+import ua.epam.task5.student.view.domainFront.StudentFront;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -144,7 +145,7 @@ public class Menu {
         Department department = new Department(id, departmentName);
         PhoneNumber phoneNumber = new PhoneNumber(code, number);
 
-        Student student = Student.build().
+        StudentFront student = StudentFront.build().
                 withName(name).
                 withSurname(surname).
                 withSecondName(secondName).
@@ -183,11 +184,14 @@ public class Menu {
         System.out.println(MANAGER.getString("login.password"));
         password = IN.next();
 
-        Optional<Student> student = studentService.login(email, password);
+        Student student = studentService.login(email, password);
 
-        student.ifPresent(this::operationService);
+        if ( student == null ) {
+            System.out.println(MANAGER.getString("login.invalidOperation"));
+        } else {
+            operationService(student);
+        }
 
-        System.out.println(MANAGER.getString("login.invalidOperation"));
     }
 
     private void operationService(Student student) {
@@ -337,7 +341,7 @@ public class Menu {
                 withFlatNumber(78).
                 build();
 
-        Student volchkov = Student.build().
+        StudentFront volchkov = StudentFront.build().
                 withName("Ihor").
                 withSurname("Volchkov").
                 withSecondName("Vasilyevich").
@@ -351,7 +355,7 @@ public class Menu {
                 withGroup("EC-91m").
                 build();
 
-        Student ilchenko = Student.build().
+        StudentFront ilchenko = StudentFront.build().
                 withName("Dmitrii").
                 withSurname("Ilchenko").
                 withSecondName("Vasilyevich").
@@ -365,7 +369,7 @@ public class Menu {
                 withGroup("EC-91m").
                 build();
 
-        Student kovtanyuk = Student.build().
+        StudentFront kovtanyuk = StudentFront.build().
                 withName("Marta").
                 withSurname("Kovtanyuk").
                 withSecondName("Olegovna").
@@ -379,7 +383,7 @@ public class Menu {
                 withGroup("UM-91m").
                 build();
 
-        Student lopuha = Student.build().
+        StudentFront lopuha = StudentFront.build().
                 withName("Valentyn").
                 withSurname("Lopuha").
                 withSecondName("Viktorovich").
@@ -393,7 +397,7 @@ public class Menu {
                 withGroup("UM-91m").
                 build();
 
-        Student piznak = Student.build().
+        StudentFront piznak = StudentFront.build().
                 withName("Vasiliy").
                 withSurname("Piznak").
                 withSecondName("Vasilyovich").
@@ -406,7 +410,7 @@ public class Menu {
                 withCourse(5).
                 withGroup("IC-91m").
                 build();
-        Student samsonov = Student.build().
+        StudentFront samsonov = StudentFront.build().
                 withName("Denys").
                 withSurname("Samsonov").
                 withSecondName("Andreevich").

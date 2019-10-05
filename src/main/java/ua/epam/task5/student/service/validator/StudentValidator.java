@@ -2,26 +2,24 @@ package ua.epam.task5.student.service.validator;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.exception.InvalidRegistrationException;
+import ua.epam.task5.student.view.domainFront.StudentFront;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
-public class StudentValidator implements Validator<Student> {
+public class StudentValidator implements Validator<StudentFront> {
     private static final Logger LOGGER = Logger.getLogger("file");
 
     @Override
-    public void validate(Student student) {
-        try {
+    public void validate(StudentFront student) {
+
             if (student == null) {
+                LOGGER.warn("Student is not valid");
                 throw new InvalidRegistrationException("Student is not valid");
             }
-        } catch (InvalidRegistrationException e) {
-            LOGGER.error("Student is not valid", e);
-            throw new RuntimeException(e);
-        }
+
         validateName(student.getName());
         validateSurname(student.getSurname());
         validateSecondName(student.getSecondName());

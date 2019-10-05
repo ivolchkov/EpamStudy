@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import ua.epam.task5.student.service.encode.PasswordEncoder;
 import ua.epam.task5.student.service.validator.Validator;
+import ua.epam.task5.student.view.domainFront.StudentFront;
 
 
 import java.util.Optional;
@@ -46,24 +47,30 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldRegisterStudent() {
-        Student student = Student.build().withName("Igor").
+        Student expected = Student.build().withName("Igor").
                 withSurname("Volchkov").
                 withSecondName("Vasilyevich").
                 withPassword("Babushka3529").
                 withEmail("igorik@gmail.com").
                 withPhoneNumber(new PhoneNumber("+(380)", "165-35-85")).
                 build();
-        Optional<Student> expected = Optional.of(student);
-        when(studentRepository.save(any(Student.class))).thenReturn(student);
+        StudentFront studentFront = StudentFront.build().withName("Igor").
+                withSurname("Volchkov").
+                withSecondName("Vasilyevich").
+                withPassword("Babushka3529").
+                withEmail("igorik@gmail.com").
+                withPhoneNumber(new PhoneNumber("+(380)", "165-35-85")).
+                build();
+        when(studentRepository.save(any(Student.class))).thenReturn(expected);
 
-        Optional<Student> actual = studentService.register(student);
+        Student actual = studentService.register(studentFront);
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldThrowRuntimeExceptionWhenRegisterStudent() {
-        Student student = Student.build().withName("Igor").
+        StudentFront student = StudentFront.build().withName("Igor").
                 build();
         exception.expect(RuntimeException.class);
         exception.expectCause((Matcher<? extends Throwable>) new AlreadyRegisteredException("Student is already registered by this e-mail"));
@@ -85,24 +92,23 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldLoginStudent() {
-        Student student = Student.build().
+        Student expected = Student.build().
                 withPassword("Babushka3529").
                 withEmail("igorik@gmail.com").
                 build();
-        Optional<Student> expected = Optional.of(student);
-        when(studentRepository.findByEmail("igorik@gmail.com")).thenReturn(expected);
-        when(encoder.encode("Babushka3529")).thenReturn(student.getPassword());
+        when(studentRepository.findByEmail("igorik@gmail.com")).thenReturn(Optional.ofNullable(expected));
+        when(encoder.encode("Babushka3529")).thenReturn(expected.getPassword());
 
-        Optional<Student> actual = studentService.login("igorik@gmail.com", "Babushka3529");
+        Student actual = studentService.login("igorik@gmail.com", "Babushka3529");
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldReturnEmptyStudent() {
-        Optional<Student> expected = Optional.empty();
-        when(studentRepository.findByEmail(any(String.class))).thenReturn(expected);
-        Optional<Student> actual = studentService.login("test@email.com", "test");
+        Student expected = null;
+        when(studentRepository.findByEmail(any(String.class))).thenReturn(Optional.ofNullable(expected));
+        Student actual = studentService.login("test@email.com", "test");
 
         assertEquals(expected, actual);
     }

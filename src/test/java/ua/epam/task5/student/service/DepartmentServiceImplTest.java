@@ -119,8 +119,8 @@ public class DepartmentServiceImplTest {
 
     @Test
     public void shouldReturnEmptyListWhenSearchingById() {
-        Optional<Student> expected = Optional.empty();
-        Optional<Student> actual = implementation.showStudent(null);
+        Student expected = null;
+        Student actual = implementation.showStudent(null);
 
         assertEquals(expected, actual);
     }

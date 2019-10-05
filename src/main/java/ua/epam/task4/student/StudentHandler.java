@@ -7,23 +7,23 @@ import java.util.TreeSet;
 
 
 public final class StudentHandler {
-    private static HashSet<Student> students = new HashSet<>();
+    private static HashSet<StudentOld> students = new HashSet<>();
 
     private StudentHandler() {
         throw new RuntimeException();
     }
 
-    public static void addStudent(Student student) {
+    public static void addStudent(StudentOld student) {
         if(student == null ) {
             throw new IllegalArgumentException();
         }
         students.add(student);
     }
 
-    public static TreeSet<Student> getFacultyStudents(String faculty) {
-        TreeSet<Student> suitableStudents = new TreeSet<Student>();
+    public static TreeSet<StudentOld> getFacultyStudents(String faculty) {
+        TreeSet<StudentOld> suitableStudents = new TreeSet<StudentOld>();
 
-        for (Student student: students) {
+        for (StudentOld student: students) {
             if ( Objects.equals(student.getFaculty(), faculty) ) {
                 suitableStudents.add(student);
             }
@@ -32,10 +32,10 @@ public final class StudentHandler {
         return suitableStudents;
     }
 
-    public static TreeSet<Student> getFacultyAndCourseStudents(String faculty, int course) {
-        TreeSet<Student> suitableStudents = new TreeSet<Student>();
+    public static TreeSet<StudentOld> getFacultyAndCourseStudents(String faculty, int course) {
+        TreeSet<StudentOld> suitableStudents = new TreeSet<StudentOld>();
 
-        for (Student student: students) {
+        for (StudentOld student: students) {
             if ( Objects.equals(student.getFaculty(), faculty) && student.getCourse() == course )  {
                 suitableStudents.add(student);
             }
@@ -44,10 +44,10 @@ public final class StudentHandler {
         return suitableStudents;
     }
 
-    public static TreeSet<Student> getStudentsOlderThan(LocalDate date) {
-        TreeSet<Student> suitableStudents = new TreeSet<Student>();
+    public static TreeSet<StudentOld> getStudentsOlderThan(LocalDate date) {
+        TreeSet<StudentOld> suitableStudents = new TreeSet<StudentOld>();
 
-        for (Student student: students) {
+        for (StudentOld student: students) {
             if ( student.getDateOfBirth().compareTo(date) < 0 )  {
                 suitableStudents.add(student);
             }
@@ -56,10 +56,10 @@ public final class StudentHandler {
         return suitableStudents;
     }
 
-    public static TreeSet<Student> getGroup(String group) {
-        TreeSet<Student> suitableStudents = new TreeSet<Student>();
+    public static TreeSet<StudentOld> getGroup(String group) {
+        TreeSet<StudentOld> suitableStudents = new TreeSet<StudentOld>();
 
-        for (Student student: students) {
+        for (StudentOld student: students) {
             if ( Objects.equals(student.getGroup(), group) )  {
                 suitableStudents.add(student);
             }

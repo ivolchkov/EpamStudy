@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.repository.StudentRepository;
+import ua.epam.task5.student.service.mapper.StudentMapper;
+import ua.epam.task5.student.view.domainFront.StudentFront;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -20,33 +22,35 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private final StudentRepository studentRepository;
 
+
     @Autowired
     public DepartmentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
+
     }
 
     @Override
-    public Optional<Student> showStudent(Long id) {
+    public Student showStudent(Long id) {
         try {
             Objects.requireNonNull(id, "Invalid identification");
-            return studentRepository.findById(id);
+            return studentRepository.findById(id).get();
         } catch(NullPointerException e) {
             LOGGER.error("Invalid identification", e);
         }
 
-        return Optional.empty();
+        return null;
     }
 
     @Override
-    public Optional<Student> showStudentByEmail(String email) {
+    public Student showStudentByEmail(String email) {
         try {
             Objects.requireNonNull(email, "Invalid e-mail");
-            return studentRepository.findByEmail(email);
+            return studentRepository.findByEmail(email).get();
         } catch(NullPointerException e) {
             LOGGER.error("Invalid e-mail", e);
         }
 
-        return Optional.empty();
+        return null;
     }
 
     @Override
@@ -66,6 +70,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         try {
             Objects.requireNonNull(department, "Invalid department");
             return studentRepository.findByDepartmentAndCourse(department, course);
+
         } catch(NullPointerException e) {
             LOGGER.error("Invalid department", e);
         }

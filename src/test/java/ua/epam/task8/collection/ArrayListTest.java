@@ -4,14 +4,12 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 
 import static org.junit.Assert.*;
 
 public class ArrayListTest {
-    private static ArrayList<Integer> arr;
+    private static MyArrayList<Integer> arr;
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -19,7 +17,7 @@ public class ArrayListTest {
     @BeforeClass
     public static void initArrayList() {
         Integer[] array = {1, 2, 3, 4, 5};
-        arr = new ArrayList<>(array);
+        arr = new MyArrayList<>(array);
     }
 
     @Test

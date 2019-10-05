@@ -1,46 +1,46 @@
-package classWork;
-
-public class A implements Comparable<A>{
-    int id;
-
-    public A(int id) {
-        this.id = id;
-        System.out.println("Constructor 454class A");
-
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "Class A";
-    }
-
-    public static void main(String[] args) {
-//        boolean a = true;
-//        boolean b = true;
-//        Boolean aa = Boolean.valueOf("true");
-//        Boolean bb = Boolean.TRUE;
-//        Boolean cc = true;
+//package classWork;
 //
-//        System.out.println(a == b);
-//        System.out.println(bb == cc);
-//        System.out.println(aa == cc);
+//import java.lang.reflect.Constructor;
+//import java.lang.reflect.Method;
 //
-//        Character char1 = Character.valueOf('\u007F');
-        Character char2 = 127;
-        Character char3 = 127;
-
-        System.out.println(char2 + " " + char3);
-//        System.out.println(char1 == char2);
-        System.out.println(char2 == char3);
-
-
-
-    }
-
-    @Override
-    public int compareTo(A a) {
-        return 0;
-    }
-}
+//public class A implements Comparable<A>{
+//    int id;
+//
+//    private A() {
+//        this.id = id;
+//        System.out.println("Constructor 454class A");
+//
+//    }
+//
+//    private void method(String a) {
+//
+//    }
+//
+//
+//
+//    @Override
+//    public String toString() {
+//        return "Class A";
+//    }
+//
+//
+//
+//
+//
+//    }
+//
+//    @Override
+//    public int compareTo(A a) {
+//        return 0;
+//    }
+//}
+//
+//class Main {
+//    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+//   Class<?> a = Class.forName("A");
+//        Constructor<A> c = (Constructor<A>) a.getDeclaredConstructor();
+//        A b = (A) a.newInstance();
+//        Method m = a.getDeclaredMethod("method", String.class);
+//        m.setAccessible(true);
+//        m.invoke(b, "Hello");
+//        }
