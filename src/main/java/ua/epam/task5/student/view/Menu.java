@@ -7,7 +7,9 @@ import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.domain.PhoneNumber;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.exception.StudentNotFoundException;
+import ua.epam.task5.student.service.DepartmentService;
 import ua.epam.task5.student.service.DepartmentServiceImpl;
+import ua.epam.task5.student.service.StudentService;
 import ua.epam.task5.student.service.StudentServiceImpl;
 import ua.epam.task5.student.view.domainFront.StudentFront;
 
@@ -20,11 +22,11 @@ public class Menu {
     private static final Scanner IN = new Scanner(System.in);
     public static final String LANGUAGE = "Select an appropriate language:\n" + "1)Russian\n" + "2)German\n" + "3)Default(English)";
 
-    private final StudentServiceImpl studentService;
-    private final DepartmentServiceImpl departmentService;
+    private final StudentService studentService;
+    private final DepartmentService departmentService;
 
     @Autowired
-    public Menu(StudentServiceImpl studentService, DepartmentServiceImpl departmentService) {
+    public Menu(StudentService studentService, DepartmentService departmentService) {
         this.studentService = studentService;
         this.departmentService = departmentService;
     }

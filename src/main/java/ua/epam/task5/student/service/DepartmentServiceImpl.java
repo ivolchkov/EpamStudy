@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service;
 import ua.epam.task5.student.domain.Student;
 import ua.epam.task5.student.domain.Department;
 import ua.epam.task5.student.repository.StudentRepository;
-import ua.epam.task5.student.service.mapper.StudentMapper;
-import ua.epam.task5.student.view.domainFront.StudentFront;
+
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+
 
 
 @Service

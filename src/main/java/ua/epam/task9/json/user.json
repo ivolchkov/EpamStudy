@@ -1,0 +1,10 @@
+{
+  "name": "Ihor",
+  "surname": "Volchkov",
+  "email": "igorik@gmail.com",
+  "phone": "+380658953245",
+  "address": {
+    "city": "Kiev",
+    "postcode": 3032
+  }
+}

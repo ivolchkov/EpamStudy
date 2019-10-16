@@ -1,6 +1,5 @@
 package ua.epam.task5.student.view;
 
-import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<service>
+    <users>
+        <user>
+            <name>Maksim</name>
+            <surname>Voloshuk</surname>
+            <email>maksim@gmail.com</email>
+            <phone>+380671556585</phone>
+        </user>
+        <user>
+            <name>Ivan</name>
+            <surname>Voloshuk</surname>
+            <email>maksim@gmail.com</email>
+            <phone>+380674656585</phone>
+        </user>
+        <user>
+            <name>Franklin</name>
+            <surname>Chou</surname>
+            <email>chou@gmail.com</email>
+            <phone>+380571656585</phone>
+        </user>
+        <user>
+            <name>Herald</name>
+            <surname>Pacera</surname>
+            <email>herald@gmail.com</email>
+            <phone>+380671656575</phone>
+        </user>
+        <user>
+            <name>Adam</name>
+            <surname>Mickevic</surname>
+            <email>adam@gmail.com</email>
+            <phone>+380671654535</phone>
+        </user>
+        <user>
+            <name>Leroy</name>
+            <surname>Jenkins</surname>
+            <email>leroy@gmail.com</email>
+            <phone>+380671656445</phone>
+        </user>
+    </users>
+</service>

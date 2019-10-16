@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <name>Ihor</name>
+        <surname>Volchkov</surname>
+        <email>igoril@gmail.com</email>
+        <phone>+380501635233</phone>
+    </user>
+    <user>
+        <name>Andrew</name>
+        <surname>Monah</surname>
+        <email>monah@gmail.com</email>
+        <phone>+380645893514</phone>
+    </user>
+</users>
